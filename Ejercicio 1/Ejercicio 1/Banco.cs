@@ -27,7 +27,50 @@ namespace Ejercicio_1
         }
 
 
+        public void IniciarSesion(string usuario, string contrasenia)
+        {
+			foreach (Usuario usuarioInd in usuarios)
+			{
+                if (usuarioInd.nombre == usuario && usuarioInd.password == contrasenia)
+				{
+                    usuarioActual = usuarioInd;
+                    break;
+				}
+			}
 
+			for (int i = 0; i < usuarios.Count; i++)
+			{
+                //if (usuarios[i].nombre == )
+                // Lo mismo que en el foreach.
+			}
+        }
+        public void CerrarSesion()
+		{
+            usuarioActual = null;
+        }
+
+        public void CrearCajaAhorro()
+		{
+            if (usuarioActual != null)
+			{
+                // Creás la caja de ahorro.
+			}
+		}
+
+        public void Depositar()
+        {
+            if (usuarioActual != null)
+            {
+                // Depositás.
+            }
+        }
+        public void Retirar()
+        {
+            if (usuarioActual != null)
+            {
+                // Retirás.
+            }
+        }
 
         public void abmclases()
         {
