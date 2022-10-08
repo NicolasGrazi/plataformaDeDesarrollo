@@ -7,7 +7,7 @@ más trabajo al querer realizar el trabajo final de la materia que será una web
 Core). Se recomienda el uso de Visual Studio 2022 y .NET Core 6.0 para evitar problemas de
 compatibilidad
 
-Detalles
+## Detalles
 
  La clase Banco es la principal del programa, ella contiene una lista de Usuarios, Caja de
 Ahorro, Tarjeta y Plazo Fijo
@@ -31,7 +31,7 @@ procesamiento y devuelve resultados) y muestra a los usuarios el resultado de su
 acciones. Debe existir una ÚNICA instancia de banco que se va pasando por referencia
 a las distintas pantallas en caso de utilizar MDI.
 
-Métodos
+## Métodos
 Los métodos de Alta, Baja y Modificación pueden tomar como parámetro los datos necesarios
 para construir el objeto en la clase lógica (Banco) o bien recibir un objeto (en el diagrama se
 expresa sólo “ABM Clases” por cuestiones de espacio) y actuar en consecuencia, el diseño
@@ -40,7 +40,8 @@ gráfica NO debe modificar los objetos de la clase lógica).
 OBS: La clase banco puede contar con cualquier otro atributo privado que consideren
 necesario, por ejemplo, puede guardar un UsuarioActual: Usuario que es una referencia al
 usuario que inició sesión.
-ABM Clases
+
+## ABM Clases
  AltaUsuario(in Usuario u): Agrega el usuario u a la lista.
  ModificarUsuario(in Usuario u): Como parámetro obtiene todos los datos del usuario
 (al menos aquellos que son modificables, el ID se pasa para identificar el usuario pero
@@ -77,7 +78,7 @@ banco.
 consumos. Quita la tarjeta de la lista del usuario y del banco.
  ModificarTarjetaCredito (in ID): Solo permite modificar el límite
 
-Mostrar Datos
+## Mostrar Datos
  MostrarCajasDeAhorro(): Devuelve una lista con las cajas de ahorro del usuario actual
 logueado.
  MostrarMovimientos (in Caja de Ahorro): Devuelve una lista con los movimientos de la
@@ -90,14 +91,16 @@ OBS: Los métodos VOID (que no devuelven nada) de ABM, bien pueden devolver un b
 indicar a la interfaz si las acciones se realizaron correctamente o no y en base a ello mostrar el
 cartel que corresponda.
 
-Operaciones Usuario
+## Operaciones Usuario
  IniciarSesion(in string Usuario, in string Contraseña): Busca en la lista de usuarios un
 usuario que tenga ese identificador (a criterio del grupo, pueden usar DNI o mail, por
 ejemplo) y esa contraseña. Si es correcto y no está bloqueado devuelve TRUE, se
 recomienda guardar el usuario logueado (UsuarioActual) en la clase Banco ya que esto
 nos facilitará las cosas en métodos subsiguientes. Caso contrario agrega un intento
 fallido al usuario, si tiene 3 intentos pasa a estado bloqueado, y devuelve FALSE.
+
  CerrarSesion():UsuarioActual pasa a ser nulo.
+
  CrearCajaAhorro(): Crea una nueva Caja de Ahorro con los datos ingresados.
  Depositar (in Caja de Ahorro, float monto): Deposita el monto ingresado en la Caja de
 Ahorro seleccionada.
