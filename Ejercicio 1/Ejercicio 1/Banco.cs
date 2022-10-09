@@ -6,14 +6,20 @@ using System.Threading.Tasks;
 
 namespace Ejercicio_1
 {
-    internal class Banco
-    {
-        public List<Usuario> usuario { get; set; }
-        private List<CajaDeAhorro> caja { get; set; }
-        private List<PlazoFijo> pfs { get; set; }
-        private List<TarjetaDeCredito> tarjetas { get; set; }
-        private List<Pago> pagos { get; set; }
-        private List<Movimiento> movimientos { get; set; }
+   internal class Banco
+	{
+        // Nunca vas a necesitar hacerle un "set" a la lista, ya que no vas a pisar una lista con otra.
+        // Con el "get" ya vas a poder agregar usuarios.
+        // Podrías borrarle el "set" a todas las listas, como hice con "usuarios".
+        public List<Usuario> usuarios { get; set }
+        public List<CajaDeAhorro> cajas { get; set; }
+        public List<PlazoFijo> pfs { get; set; }
+        public List<TarjetaDeCredito> tarjetas { get; set; }
+        public List<Pago> pagos { get; set; }
+        public List<Movimiento> movimientos { get; set; }
+
+        Usuario usuarioActual;
+
 
         public Banco()
         {
@@ -21,29 +27,61 @@ namespace Ejercicio_1
             tarjetas = new List<TarjetaDeCredito>();
             movimientos = new List<Movimiento>();
             pfs = new List<PlazoFijo>();
-            caja = new List<CajaDeAhorro>();
-            usuario = new List<Usuario>();
-
+            cajas = new List<CajaDeAhorro>();
+            usuarios = new List<Usuario>();
+            usuarioActual = null;
         }
 
 
+        
         public void IniciarSesion(string usuario, string contrasenia)
         {
-			foreach (Usuario usuarioInd in usuarios)
-			{
-                if (usuarioInd.nombre == usuario && usuarioInd.password == contrasenia)
-				{
-                    usuarioActual = usuarioInd;
-                    break;
-				}
-			}
+            try{ 
+                bool encontrado=false
 
-			for (int i = 0; i < usuarios.Count; i++)
-			{
-                //if (usuarios[i].nombre == )
-                // Lo mismo que en el foreach.
-			}
+			     foreach (Usuario usuarioInd in this.usuario){
+
+                        if (usuarioInd.nombre == usuario ){
+
+                            if (usuarioInd.bloqueado == false) { 
+
+                                while( usuarioInd.intentosFallidos< 4 && encontrado == false) { 
+                    
+
+                                    if(usuarioInd.password == contrasenia  ) {
+                                        usuarioActual = usuarioInd;
+                                        usuarioInd.intentosFallidos=0;
+                                        encontrado = true;
+                                    }
+                                    else{
+                                        usuarioInd.intentosFallidos++;
+
+                                        if (usuarioInd.intentosFallidos == 4){
+
+                                            usuarioInd.bloqueado=true
+                                        }
+                        
+                                    }
+                                }
+                            }
+                    
+				        }
+
+                 }
+
+
+            }
+            catch(Exception i){
+
+                Console.WriteLine("error de "+i);
+            }
+
+           
+		
+
         }
+        
+
         public void CerrarSesion()
 		{
             usuarioActual = null;
@@ -57,56 +95,88 @@ namespace Ejercicio_1
 			}
 		}
 
-        public void Depositar(int cajaDeAhorro, float monto)
-        {
+         public bool Depositar(int cajaDeAhorro, float monto){
+
+
             if (usuarioActual != null)
             {
-                cajaDeAhorro = monto + cajaDeAhorro
-            }
+		        foreach(CajasAhorro cajas in usuarioActual.cajas){
+		    
+		            if(cajas.id == cajaAhorro){
+		       
+			    
+			    	cajas.Saldo = monto + cajas.Saldo;
+
+                        return true;
+
+                    }else{ 
+                    
+                            return false;
+                    }
+		        }
+                
+            } 
 
 
-        }
+         }
         
         
-        public void Retirar(int cajaDeAhorro, float monto)
+        public bool Retirar(int cajaDeAhorro, float monto)
         {
             if (usuarioActual != null)
             {
              
-                if (saldo > 0)
-                {
-                
-                    if (cajaDeAhorro < monto)
+		       foreach(CajasAhorro cajas in usuarioActual.cajas){    
+		    
                     
-                       return "Fondos insuficientes";
-
-                }
-                else{ 
+                    if (cajas.saldo >= monto && cajas.id == cajaDeAhorro){
                 
-                    cajaDeAhorro = cajaDeAhorro - monto;
                     
-                }
-        }
+                        cajas.saldo = cajas.saldo - monto;
 
-        public void Transferir(int cajaDeAhorro, int cajaDeAhorroDestino, float monto){ 
+                        return true;
+                       
+
+		            }else{ 
+                
+                    
+                        Console.WriteLine("Fondos insuficientes");
+                        
+                        return false;
+                    
+                    }
+        
+                }
+		    
+	        }		    
+
         
             
+        public bool Transferir(int cajaDeAhorro, int cajaDeAhorroDestino, float monto){ 
         
-        }
+		
+            if (usuarioActual != null){
+		
+			
+                bool montoTransferir = Retirar(cajaDeAhorro, monto);
+			
+                if(true == montoTransferir) {
+                    
+                          
+                   bool transferenciaCompletada = Depositar(cajaDeAhorroDestino, monto);
 
-        public void abmclases()
-        {
+                        Console.WriteLine(transferenciaCompletada);
+                        return true;
 
-        }
-        public void mostrarDatos()
-        {
+                    }
+                    else{ 
+                    
+                     return false;
 
-        }
-        public void operacionesUsuarios()
-        {
-
-        }
-
+                    }
+		
+		
+		}
 
 
     }
