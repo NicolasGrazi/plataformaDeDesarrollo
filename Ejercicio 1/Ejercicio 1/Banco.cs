@@ -57,19 +57,41 @@ namespace Ejercicio_1
 			}
 		}
 
-        public void Depositar()
+        public void Depositar(int cajaDeAhorro, float monto)
         {
             if (usuarioActual != null)
             {
-                // Depositás.
+                cajaDeAhorro = monto + cajaDeAhorro
             }
+
+
         }
-        public void Retirar()
+        
+        
+        public void Retirar(int cajaDeAhorro, float monto)
         {
             if (usuarioActual != null)
             {
-                // Retirás.
-            }
+             
+                if (saldo > 0)
+                {
+                
+                    if (cajaDeAhorro < monto)
+                    
+                       return "Fondos insuficientes";
+
+                }
+                else{ 
+                
+                    cajaDeAhorro = cajaDeAhorro - monto;
+                    
+                }
+        }
+
+        public void Transferir(int cajaDeAhorro, int cajaDeAhorroDestino, float monto){ 
+        
+            
+        
         }
 
         public void abmclases()
